@@ -1,4 +1,4 @@
-package com.fc.http;
+package com.fc.http.core;
 
 /**请求方式枚举
  * @author fengchao

@@ -1,4 +1,4 @@
-package com.fc.http.util.HttpConnectUtil;
+package com.fc.http.example;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -8,7 +8,11 @@ import com.fc.http.core.HttpConnectFacory;
 import com.fc.http.core.HttpMethordEnum;
 import com.fc.http.core.HttpConnectFacory.HttpConnect;
 
-public class MyTest {
+/**调用示例
+ * @author fengchao
+ *
+ */
+public class ApplyCase {
 
 	CountDownLatch latch=new CountDownLatch(1);
 	/**
@@ -18,7 +22,7 @@ public class MyTest {
 	public void testCheck(){
 		HttpConnect connect;
 		try {
-			connect = HttpConnectFacory.getHttpConnect("http","192.168.0.22","8080","twbs/a/sys/user/list");
+			connect = HttpConnectFacory.getHttpConnect("http","127.0.0.1","8080","twbs/a/sys/user/list");
 			connect.setHeader("Cookie","jeesite.session.id=c5e6909ff5f841c4bffd3fdbecf772b9");
 			connect.setConnectTimeout(60000);     //超时设置
 			connect.openConnect(HttpMethordEnum.POST);

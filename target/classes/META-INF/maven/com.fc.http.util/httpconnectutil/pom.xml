@@ -4,7 +4,8 @@
 
 	<groupId>com.fc.http.util</groupId>
 	<artifactId>httpconnectutil</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<!--  版本号要注意:SNAPSHOT结尾的版本只能发布到snapshot仓库中不能发布到release仓库中	-->
+	<version>0.0.1-release</version>
 	<packaging>jar</packaging>
 
 	<name>HttpConnectUtil</name>
@@ -28,23 +29,66 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
+		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-log4j12</artifactId> 
+			<version>${slf4j.version}</version> </dependency> -->
 		<!-- common-logging 实际调用slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<!-- java.util.logging 实际调用slf4j -->
+		<!-- locgback 实际调用slf4j -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jul-to-slf4j</artifactId>
-			<version>${slf4j.version}</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.2.2</version>
 		</dependency>
 		<!-- LOGGING end -->
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.3</version>
+				<!--  防止中文乱码	-->
+				<configuration>
+				  <encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<!-- 指定source和target的版本 -->
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- 发布 -->
+	<distributionManagement>
+		<repository>
+			<id>NexusRepository</id>
+			<name>private-library-releases</name>
+			<url>http://192.168.0.37:8081/nexus/content/repositories/myRepositories</url>
+		</repository>
+	</distributionManagement>
 </project>
