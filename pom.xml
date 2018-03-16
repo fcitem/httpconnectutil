@@ -4,7 +4,7 @@
 
 	<groupId>com.fc.http.util</groupId>
 	<artifactId>httpconnectutil</artifactId>
-	<!--  版本号要注意:SNAPSHOT结尾的版本只能发布到snapshot仓库中不能发布到release仓库中	-->
+	<!-- 版本号要注意:SNAPSHOT结尾的版本只能发布到snapshot仓库中不能发布到release仓库中 -->
 	<version>0.0.1-release</version>
 	<packaging>jar</packaging>
 
@@ -15,7 +15,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>1.7.7</slf4j.version>
 	</properties>
-
+	<repositories>
+		<!-- <repository>
+			<id>nexus2</id>
+			<name>nexus2</name>
+			<url>http://192.168.166.78:8081/repository/maven-public/</url>
+		</repository> -->
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -29,16 +35,19 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-log4j12</artifactId> 
-			<version>${slf4j.version}</version> </dependency> -->
+		<!-- <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency> -->
 		<!-- common-logging 实际调用slf4j -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
-		</dependency>
+		</dependency> -->
 		<!-- locgback 实际调用slf4j -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>1.2.2</version>
@@ -48,8 +57,9 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
 			<version>1.2.2</version>
-		</dependency>
+		</dependency> -->
 		<!-- LOGGING end -->
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -57,9 +67,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<version>2.3</version>
-				<!--  防止中文乱码	-->
+			<!-- 	防止中文乱码 -->
 				<configuration>
-				  <encoding>UTF-8</encoding>
+					<encoding>UTF-8</encoding>
 				</configuration>
 				<executions>
 					<execution>
@@ -85,10 +95,8 @@
 	</build>
 	<!-- 发布 -->
 	<distributionManagement>
-		<repository>
-			<id>NexusRepository</id>
-			<name>private-library-releases</name>
-			<url>http://192.168.0.37:8081/nexus/content/repositories/myRepositories</url>
-		</repository>
+		<!-- <repository> <id>NexusRepository</id> <name>private-library-releases</name> 
+			<url>http://192.168.0.37:8081/nexus/content/repositories/myRepositories</url> 
+			</repository> -->
 	</distributionManagement>
 </project>

@@ -4,6 +4,7 @@ import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
 
+import com.fc.http.core.ContentType;
 import com.fc.http.core.HttpConnectFacory;
 import com.fc.http.core.HttpMethordEnum;
 import com.fc.http.core.HttpConnectFacory.HttpConnect;
@@ -12,7 +13,7 @@ import com.fc.http.core.HttpConnectFacory.HttpConnect;
  * @author fengchao
  *
  */
-public class ApplyCase {
+public class AppCase {
 
 	CountDownLatch latch=new CountDownLatch(1);
 	/**
@@ -22,9 +23,10 @@ public class ApplyCase {
 	public void testCheck(){
 		HttpConnect connect;
 		try {
-			connect = HttpConnectFacory.getHttpConnect("http","127.0.0.1","8080","twbs/a/sys/user/list");
-			connect.setHeader("Cookie","jeesite.session.id=c5e6909ff5f841c4bffd3fdbecf772b9");
+			connect = HttpConnectFacory.getHttpConnect("http","127.0.0.1","8080","twbs/server/sync/user/1?appNo=1");
+//			connect.setHeader("Cookie","jeesite.session.id=45a48b20bf274639a16e301243c34338; skin=default");
 			connect.setConnectTimeout(60000);     //超时设置
+			connect.setRequestProperty(ContentType.APPLICATION_JSON);
 			connect.openConnect(HttpMethordEnum.POST);
 			connect.sendRequest("");
 			connect.read();

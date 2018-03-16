@@ -108,13 +108,18 @@ public class HttpConnectFacory {
 				} else {
 					throw new UnsupportedOperationException("不支持的请求方式");
 				}
-				connect.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
 				connect.connect();
 				logger.info("已从 " + Url.toString() + " 建立连接"); // 在发送数据之前千万不要进行任何的读操作
 			} catch (Exception e) {
-				logger.error("连接打开异常", e);
+				logger.error("连接打开异常:"+Url.toString(), e);
 				closeConneect();
 			}
+		}
+		/**设置请求体数据格式
+		 * @param contentType
+		 */
+		public void setRequestProperty(ContentType contentType ){
+			connect.setRequestProperty("Content-Type", contentType.getValue());	
 		}
 
 		/**
@@ -198,8 +203,9 @@ public class HttpConnectFacory {
 		/**
 		 * 发送请求数据
 		 * 
-		 * @param msg 字符串类型的请求，可以是对象转换过后的json数据格式 若无需要传null
-		 * GET请求参数放在url后面,POST请求才传入此参数
+		 * @param msg
+		 *            字符串类型的请求，可以是对象转换过后的json数据格式 若无需要传null
+		 *            GET请求参数放在url后面,POST请求才传入此参数
 		 */
 		public void sendRequest(String msg) {
 			try {
@@ -218,11 +224,7 @@ public class HttpConnectFacory {
 					logger.info("请求已发送,ResponseCode=" + connect.getResponseCode());
 				}
 			} catch (IOException e) {
-				try {
-					logger.error("发送请求异常,ResponseCode="+ connect.getResponseCode(), e);
-				} catch (IOException e1) {
-					logger.error("发送请求异常",e1);
-				}
+				logger.error("发送请求异常", e);
 				closeConneect();
 			}
 		}
@@ -230,19 +232,28 @@ public class HttpConnectFacory {
 		/**
 		 * 读取请求结果
 		 */
-		public void read() {
+		public String read() {
+			BufferedReader reader=null;
 			try {
-				BufferedReader reader = new BufferedReader(new InputStreamReader(connect.getInputStream()));
+				reader = new BufferedReader(new InputStreamReader(connect.getInputStream()));
 				String str = reader.readLine();
-				System.out.println(str);
-				reader.close();
+				return str;
 			} catch (IOException e) {
 				try {
 					logger.error("读取结果异常,ResponseCode=" + connect.getResponseCode(), e);
 				} catch (IOException e1) {
-					logger.error("读取结果异常",e1);
+					logger.error("读取结果异常", e1);
+				}
+			}finally {
+				if(reader!=null){
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
+			return null;
 		}
 
 		public URL getUrl() {
